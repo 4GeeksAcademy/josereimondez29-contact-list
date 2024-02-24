@@ -1,44 +1,49 @@
 import React, { useState } from 'react';
-
+import '/workspaces/josereimondez29-contact-list/src/styles/UserRegistration.css';
 import { Link } from 'react-router-dom';
 
 const UserRegistration = () => {
   
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
+    nombreCompleto: '', 
     direccion: '',
     edad: '',
     pais: '',
     email: '',
+    telefono: '', 
   });
 
-  const urlTodos = "https://playground.4geeks.com/apis/fake/contact/"
+  const urlTodos = "https://playground.4geeks.com/apis/fake/contact/";
 
-  const handleSubmit = (e) => {
-    const newForm = {
-        label: inputValue,
-        done: false 
-      };
-      setFormData([...formData, newForm]);
-      fetch(urlTodos, {
-        method: "POST",
-        body: JSON.stringify([...formData, newForm]),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response) => { return response.json() })
-			.then((data) => { console.log(data) })
-			.catch((err) => { err })
-  };
-
-  const handleCancel = () => {
-    <div>
-        <Link to="/">
-				<button className="btn btn-danger">Cancel</button>
-		</Link>
-    </div>
+  const userSubmit = () => {
+    fetch(urlTodos, {
+      method: "POST",
+      body: JSON.stringify({
+        full_name: formData.nombreCompleto, 
+        email: formData.email,
+        agenda_slug: "josereimondez29",
+        address: formData.direccion,
+        phone: formData.telefono
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Usuario guardado:", data);
+      setFormData({
+        nombreCompleto: '', 
+        direccion: '',
+        edad: '',
+        pais: '',
+        email: '',
+        telefono: '', 
+      });
+    })
+    .catch((err) => {
+      console.error("Error al guardar usuario:", err);
+    });
   };
 
   const handleChange = (e) => {
@@ -49,16 +54,18 @@ const UserRegistration = () => {
   return (
     <div className="user-registration-form">
       <h2>Formulario de Registro de Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
-        <input type="text" name="apellido" placeholder="Apellido" value={formData.apellido} onChange={handleChange} required />
+      <form onSubmit={userSubmit}>
+        <input type="text" name="nombreCompleto" placeholder="Nombre y Apellido" value={formData.nombreCompleto} onChange={handleChange} required /> 
         <input type="text" name="direccion" placeholder="Dirección" value={formData.direccion} onChange={handleChange} required />
         <input type="number" name="edad" placeholder="Edad" value={formData.edad} onChange={handleChange} required />
         <input type="text" name="pais" placeholder="País" value={formData.pais} onChange={handleChange} required />
         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input type="tel" name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} required /> 
         <div className="buttons">
           <button type="submit" className="save-btn">Guardar</button>
-          <button type="button" className="cancel-btn" onClick={handleCancel}>Cancelar</button>
+          <Link to="/">
+            <button type="button" className="cancel-btn">Cancelar</button>
+          </Link>
         </div>
       </form>
     </div>
@@ -66,3 +73,6 @@ const UserRegistration = () => {
 };
 
 export default UserRegistration;
+
+
+
