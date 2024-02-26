@@ -16,6 +16,7 @@ const UserRegistration = () => {
   const urlTodos = "https://playground.4geeks.com/apis/fake/contact/";
 
   const userSubmit = () => {
+    console.log(formData)
     fetch(urlTodos, {
       method: "POST",
       body: JSON.stringify({
@@ -54,7 +55,7 @@ const UserRegistration = () => {
   return (
     <div className="user-registration-form">
       <h2>Formulario de Registro de Usuario</h2>
-      <form onSubmit={userSubmit}>
+      <form >
         <input type="text" name="nombreCompleto" placeholder="Nombre y Apellido" value={formData.nombreCompleto} onChange={handleChange} required /> 
         <input type="text" name="direccion" placeholder="Dirección" value={formData.direccion} onChange={handleChange} required />
         <input type="number" name="edad" placeholder="Edad" value={formData.edad} onChange={handleChange} required />
@@ -62,7 +63,7 @@ const UserRegistration = () => {
         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
         <input type="tel" name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} required /> 
         <div className="buttons">
-          <button type="submit" className="save-btn">Guardar</button>
+          <button type="submit" className="save-btn" onClick={userSubmit}>Guardar</button>
           <Link to="/">
             <button type="button" className="cancel-btn">Cancelar</button>
           </Link>

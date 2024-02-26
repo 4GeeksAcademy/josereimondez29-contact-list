@@ -41,7 +41,7 @@ export const Home = () => {
                         <p><strong>Teléfono:</strong> {user.phone}</p>
                         <p><strong>Dirección:</strong> {user.address}</p>
                         <p><strong>id:</strong> {user.id}</p>
-                        <Link to="/ContactDetails">Ver Detalles</Link>
+                        <Link to={`/ContactDetails/${user.id}`}>Ver Detalles</Link>
                     </div>
                 ))}
             </div>
